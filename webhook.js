@@ -20,9 +20,10 @@ let server = http.createServer(function (req, res) {
       let signature = req.headers['x-hub-signature']
       if(signature !=sign(body)) {
         return res.end('Not Allowed')
-      } else {
+      } 
         res.setHeader('Content-Type', 'application/json')
         res.end(JSON.stringify({ok: true}));
+        console.log(event)
         if (event === 'push') { // 开始部署
           let payload = JSON.parse(body)
           let child = spawn('sh',[`./${payload.repository.name}.sh`]);
@@ -42,7 +43,6 @@ let server = http.createServer(function (req, res) {
               // `);
           });
         }
-      }
     })
     
   } else {
