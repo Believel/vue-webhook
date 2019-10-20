@@ -23,7 +23,6 @@ let server = http.createServer(function (req, res) {
       } 
         res.setHeader('Content-Type', 'application/json')
         res.end(JSON.stringify({ok: true}));
-        console.log(event)
         if (event === 'push') { // 开始部署
           let payload = JSON.parse(body)
           let child = spawn('sh',[`./${payload.repository.name}.sh`]);
@@ -32,6 +31,7 @@ let server = http.createServer(function (req, res) {
               buffers.push(buffer);
           });
             child.stdout.on('end',function(buffer){
+              console.log(1111)
               let logs = Buffer.concat(buffers).toString();
               console.log(logs)
               // sendMail(`
